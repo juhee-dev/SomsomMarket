@@ -10,12 +10,6 @@
 - Java, Spring, SpringBoot, JPA, OracleDB, WebSocket, Lombok, Thymeleaf
 <br>
 
-## Workflow
-1. 이슈 작성
-2. 작업 내용 커밋
-3. 메인에서 풀 받기
-4. 개인 브랜치로 푸시
-5. 머지  
 
 ## 
 <img width="607" alt="image" src="https://user-images.githubusercontent.com/56381189/235272640-4cff273f-9952-45b5-afd5-11a8c3c141a8.png">
