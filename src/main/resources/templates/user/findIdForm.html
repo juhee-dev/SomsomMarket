@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <meta charset="UTF-8">
+    <title>아이디 찾기</title>
+</head>
+<body>
+<style>
+    .content {
+        width: 100%;
+        text-align: center;
+    }
+
+    .regBtn {
+        border: 1px solid;
+		border-radius: 8px;
+		background-color: #AB2948;
+		color: white;
+		font-weight: bold;
+		width: 300px;
+		height: 70px;
+		font-size: 35px;
+    }
+
+</style>
+<script>
+    function onSubmit() {
+        var email = $('#email').val();
+        var phone = $('#phone').val();
+
+        if (email == '') {
+            alert('이메일 주소를 입력해주세요.');
+            return false;
+        }
+        if (phone == '') {
+            alert('전화번호를 입력해주세요.');
+            return false;
+        }
+
+        $.ajax({
+			type : "POST",
+			url : "/user/findId",
+			data : {
+				"email" : email, "phone" : phone
+			},
+			success : function(accountList) {
+			    var size = accountList.length;
+                if (size == 0) {
+                    $('#idAlert').text("아이디를 찾을 수 없습니다.");
+                } else {
+                    var str = "아이디 : ";
+                    for (var i = 0; i < size; i++) {
+                        str += accountList[i];
+                        if (i != size-1) {
+                            str += " / ";
+                        }
+                    }
+                    $('#idAlert').text(str);
+                }
+			}
+		});
+    }
+</script>
+<div class="content">
+    <a href="/"><img th:src="@{/images/somsom.png}" width="150" height="150"/></a>
+    <br><br><br><br><br><br>
+
+<div class="form-group">
+    <label th:for="email">이메일</label>
+    <input type="text" id="email" name="email" class="form-control" placeholder="이메일 주소를 입력해주세요">
+</div>
+<br>
+<div class="form-group">
+    <label th:for="phone">전화번호</label>
+    <input type="text" id="phone" name="phone" class="form-control" placeholder="전화번호를 입력해주세요">
+</div>
+<br>
+<input type="button" class="regBtn" onClick="onSubmit()" value="찾기"><br><br>
+
+<span id="idAlert" style="color:red;"></span>
+
+</div>
+</body>
+</html>

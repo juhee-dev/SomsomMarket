@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>공동구매상품 판매 내역</title>
+    <style>
+        body {
+            padding:1.5em;
+            background: #f5f5f5
+        }
+
+        table {
+            border: 1px #6f263d solid;
+            font-size: .9em;
+            box-shadow: 0 2px 5px rgba(0,0,0,.25);
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        th {
+            text-align: left;
+        }
+
+        thead {
+            font-weight: bold;
+            color: #fff;
+            background: #6f263d;
+        }
+
+        td, th {
+            padding: 1em .5em;
+            vertical-align: middle;
+        }
+
+        td {
+            border-bottom: 1px solid rgba(0,0,0,.1);
+            background: #fff;
+        }
+
+        a {
+            color: #73685d;
+        }
+
+        @media all and (max-width: 768px) {
+
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            th {
+                text-align: right;
+            }
+
+            table {
+                position: relative;
+                padding-bottom: 0;
+                border: none;
+                box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+            }
+
+            thead {
+                float: left;
+                white-space: nowrap;
+            }
+
+            tbody {
+                overflow-x: auto;
+                overflow-y: hidden;
+                position: relative;
+                white-space: nowrap;
+            }
+
+            tr {
+                display: inline-block;
+                vertical-align: top;
+            }
+
+            th {
+                border-bottom: 1px solid #6f263d;
+            }
+
+            td {
+                border-bottom: 1px solid #6f263d;
+            }
+        }
+    </style>
+</head>
+<body>
+<table  class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>상품명</th>
+                <th>가격</th>
+                <th>판매자</th>
+                <th>마감일</th>
+                <th>목표금액</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${groupItemList}">
+                <td th:text="${item.id}"></td>
+                <td><a th:href="@{/group/detail(id=${item.id})}" th:text="${item.title}" /></td>
+                <td th:text="${item.price}">원</td>
+                <td th:text="${item.sellerId}"></td>
+                <td th:text="${#dates.format(item.endDate, 'dd-MMM-yyyy')}"></td>
+                <td th:text="${item.salesTarget}"></td>
+                <!--아래 수정하기-->
+                <td><a th:href="@{/group/item/update(id=${item.id})}">수정</a></td>
+                <td><a th:href="@{/group/item/delete(id=${item.id})}">삭제</a></td>
+            </tr>
+
+            </tbody>
+        </table>
+        <div th:replace="fragments/footer :: footer"/>
+    </div>
+</table>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <meta charset="UTF-8">
+    <title>구매 내역</title>
+</head>
+<style>
+  a:hover {
+    opacity: 0.7;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+</style>
+<body>
+<div th:replace="fragments/bodyHeader :: bodyHeader" />
+
+<h2>구매 내역</h2>
+
+<table>
+  <tr th:each="item : ${userOrderList}">
+    <td>
+      <a th:href="@{/personal/detail/{itemId}(itemId = ${item.id})}"> <!-- 링크 수정 필요!! -->
+        <span th:each="orderItem : ${item.orderItems}">
+          <span th:text="${orderItem.item.title}"></span>
+        </span>
+        <span th:text="${item.name}"></span>
+        <span th:text="${item.phone}"></span>
+        <span th:text="${item.address}"></span>
+        <span th:text="${item.zipcode}"></span>
+        <span th:text="${item.totalPrice}"></span>
+      </a>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
